@@ -1,0 +1,17 @@
+{
+  "game": {
+    "author": "scambier",
+    "desc": "short description",
+    "cart": "LDJAM39.tic"
+  },
+  "tic": {
+    "ticPath": "C:/Users/Sim/Desktop/tic.exe",
+    "cartsPath": "C:/Users/Sim/AppData/Roaming/com.nesbox.tic/TIC-80"
+  },
+  "compression": {
+    "compressedFile": "build/compressed.js",
+    "indentLevel": 1,
+    "compress": false,
+    "mangle": false
+  }
+}
