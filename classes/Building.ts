@@ -1,16 +1,10 @@
-class Building {
+/// <reference path="Tile.ts" />
+
+class Building extends Tile {
   static tiles = [5, 6, 7]
   static tileOff = 10
   static list: Building[]
   static listOff: Building[]
-
-  x: number
-  y: number
-
-  constructor(x, y) {
-    this.x = x
-    this.y = y
-  }
 
   static findAll() {
     Building.list = []

@@ -7,12 +7,14 @@ class Entity {
   speed = .5
   transparency = 0
 
-  constructor(gx, gy, tile) {
+  constructor(x, y, tile) {
 
     this.sprite = tile
 
-    this.x = gx * 8
-    this.y = gy * 8
+    this.x = x
+    this.y = y
+
+    entities.push(this)
   }
 
   get gx(): number {
@@ -27,7 +29,7 @@ class Entity {
     return this.moving.x != 0 || this.moving.y != 0
   }
 
-  draw() {
+  draw(t: number) {
     let
       x = Math.round(this.x),
       y = Math.round(this.y),

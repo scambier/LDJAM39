@@ -1,3 +1,5 @@
+const entities: Entity[] = []
+
 let
   t = 0,
   player: Entity,
@@ -5,8 +7,9 @@ let
 
 function init() {
   camera = new Camera()
-  player = new Entity(6, 6, 256)
+  player = new Entity(6*8, 6*8, 256)
   Building.findAll()
+  Generator.findAll()
 
   let arr = [
     ["Look at that city.", 1000],
@@ -19,10 +22,12 @@ function init() {
     ["(Your cable management suck too)", 10200],
     ["(I mean, look at that mess)", 12000],
     ["", 14000],
-    ["Anyway, do your best to keep the", 14000],
-    ["  city powered all night.", 14200],
-    ["Because while you're reading this,", 16000],
-    ["  your city is going dark...", 18000],
+    ["By the way, shit's on fire, yo.", 14000],
+
+    // ["Anyway, do your best to keep the", 14000],
+    // ["  city powered all night.", 14200],
+    // ["Because while you're reading this,", 16000],
+    // ["  your city is going dark...", 18000],
   ]
   arr.forEach(item => {
     wait(() => {
@@ -30,7 +35,8 @@ function init() {
     }, item[1])
   })
 
-  Building.startShutdown()
+  // wait(Building.startShutdown, 10000)
+  wait(Generator.startRandomFire, 1000)
 }
 
 function TIC() {
@@ -75,6 +81,10 @@ function TIC() {
 
 function draw(t: number) {
   map(0, 0, 30, 17, 0, 0)
-  player.draw()
+
+  entities.forEach(entity => {
+    entity.draw(t)
+  })
+
   Log.draw()
 }
