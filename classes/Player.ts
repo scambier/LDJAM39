@@ -53,14 +53,24 @@ class Player extends Entity {
   }
 
   use() {
+    if (!this.holding) {
+      return
+    }
     switch (this.holding.sprite) {
       case EXTINGUISHER:
-        let fire: Fire = this.findClosest(item => item.sprite == FIRE, 10)
+        let fire: GeneratorFailure = this.findClosest(item => item.sprite == FIRE, 10)
         if (fire) {
           spr(GAS, fire.x, fire.y, 0, 1, t % 20 > 10)
           fire.putDown()
         }
-        break;
+        break
+      case WRENCH:
+        let sparks: GeneratorFailure = this.findClosest(item => item.sprite == SPARKS, 10)
+        if (sparks) {
+          spr(t % 30 > 15 ? REPAIR : 0, sparks.x, sparks.y, 0, 1)
+          sparks.putDown()
+        }
+        break
     }
   }
 

@@ -1,16 +1,23 @@
-class Fire extends Entity {
+class GeneratorFailure extends Entity {
 
   hp: number
 
-  constructor(x, y) {
-    super(x, y, 273)
+  constructor(x, y, sprite) {
+    super(x, y, sprite)
     this.hp = randRangeInt(3, 5)
   }
 
   draw(t) {
     super.draw(t)
-    if (t % 30 == 0) {
-      this.flip = !this.flip
+    if (this.sprite == FIRE) {
+      if (t % 30 == 0) {
+        this.flip = !this.flip
+      }
+    }
+    if (this.sprite == SPARKS) {
+      if (t % 2 == 0) {
+        this.flip = !this.flip
+      }
     }
   }
 

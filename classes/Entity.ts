@@ -8,7 +8,7 @@ class Entity {
   transparency = 0
   takeable = false
 
-  constructor(x, y, tile, options: any = {}) {
+  constructor(x, y, tile, options: { takeable?: boolean } = {}) {
     this.sprite = tile
     this.x = x
     this.y = y
@@ -32,7 +32,7 @@ class Entity {
     return {x: this.x, y: this.y}
   }
 
-  set pos(pos:Vector2) {
+  set pos(pos: Vector2) {
     this.x = pos.x
     this.y = pos.y
   }

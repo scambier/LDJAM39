@@ -8,8 +8,11 @@ class Generator extends Tile {
   failure: Entity
 
   static startFailures() {
-    if (Math.random() < .2) {
-      Generator.startRandomFire()
+    const rnd = Math.random()
+    if (rnd < .1) {
+      Generator.startRandomFailure(FIRE)
+    } else if (rnd < .2) {
+      Generator.startRandomFailure(SPARKS)
     }
     wait(Generator.startFailures, 1000)
   }
@@ -19,13 +22,11 @@ class Generator extends Tile {
   //   if (generator) generator.fail()
   // }
 
-  static startRandomFire() {
+  static startRandomFailure(sprite) {
     const generator: Generator = randomItem(Generator.list)
-    generator.failure = new Fire(generator.x * 8, generator.y * 8)
-  }
-
-  fail() {
-    this.failure = new Fire(this.x * 8, this.y * 8)
+    if (!generator.failure) {
+      generator.failure = new GeneratorFailure(generator.x * 8, generator.y * 8, sprite)
+    }
   }
 
 }

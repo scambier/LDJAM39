@@ -1,7 +1,7 @@
 {
   "game": {
     "author": "scambier",
-    "desc": "short description",
+    "desc": "LDJAM39",
     "cart": "LDJAM39.tic"
   },
   "tic": {
@@ -11,7 +11,7 @@
   "compression": {
     "compressedFile": "build/compressed.js",
     "indentLevel": 1,
-    "compress": false,
-    "mangle": false
+    "compress": true,
+    "mangle": true
   }
 }

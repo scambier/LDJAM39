@@ -2,14 +2,16 @@ const entities: Entity[] = []
 
 let
   t = 0,
-  player : Player,
+  player: Player,
   extinguisher: Entity,
+  wrench: Entity,
   camera: Camera
 
 function init() {
   camera = new Camera()
-  player = new Player(6*8, 6*8)
-  extinguisher = new Entity(8, 8, EXTINGUISHER, {takeable:true})
+  player = new Player(6 * 8, 6 * 8)
+  extinguisher = new Entity(8, 8, EXTINGUISHER, {takeable: true})
+  wrench = new Entity(8, 8, WRENCH, {takeable: true})
   Building.findAll()
   Generator.findAll()
 

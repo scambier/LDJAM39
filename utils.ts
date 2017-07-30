@@ -7,8 +7,11 @@ const
   USE = 5,
 
   EXTINGUISHER = 257,
+  WRENCH = 258,
   FIRE = 273,
+  SPARKS = 274,
   GAS = 275,
+  REPAIR = 276,
 
   COLLIDES = [
     3, 11, // walls
