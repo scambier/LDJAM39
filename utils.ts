@@ -65,7 +65,7 @@ function clearMap(): void {
 const waitingCallbacks = []
 
 function wait(cb, t): void {
-  waitingCallbacks.push({cb: cb, t: time() + t*1000})
+  waitingCallbacks.push({cb: cb, t: time() + t})
 }
 
 function checkWaitingCallbacks() {
@@ -75,5 +75,17 @@ function checkWaitingCallbacks() {
       item.cb()
       waitingCallbacks.splice(i, 1)
     }
+  }
+}
+
+function randomItem(items): any {
+  const index = Math.floor(Math.random() * items.length)
+  return items[index];
+}
+
+function remove(arr, item): void {
+  const index = arr.indexOf(item)
+  if (index > -1) {
+    arr.splice(index, 1)
   }
 }

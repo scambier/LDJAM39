@@ -6,23 +6,31 @@ let
 function init() {
   camera = new Camera()
   player = new Entity(6, 6, 256)
+  Building.findAll()
 
   let arr = [
-    ["Look at that city.", 1],
-    ["It will soon run out of power, because", 2],
-    ["  your generators suck.", 2.2],
-    ["They're old, prone to fail or catch fire.", 5],
-    ["Or to be eaten by rats and stuff.", 7],
+    ["Look at that city.", 1000],
+    ["It will soon run out of power, because", 2000],
+    ["  your generators suck.", 2200],
+    ["They're old, prone to fail or catch fire.", 5000],
+    ["Or to be eaten by rats and stuff.", 7000],
 
-    ["", 10],
-    ["(Your cable management suck too)", 10.2],
-    ["(I mean, look at that mess)", 12],
+    ["", 10000],
+    ["(Your cable management suck too)", 10200],
+    ["(I mean, look at that mess)", 12000],
+    ["", 14000],
+    ["Anyway, do your best to keep the", 14000],
+    ["  city powered all night.", 14200],
+    ["Because while you're reading this,", 16000],
+    ["  your city is going dark...", 18000],
   ]
   arr.forEach(item => {
     wait(() => {
       Log.print(item[0])
     }, item[1])
   })
+
+  Building.startShutdown()
 }
 
 function TIC() {
