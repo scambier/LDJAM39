@@ -37,8 +37,8 @@ function init() {
     }, item[1])
   })
 
-  // wait(Building.startShutdown, 10000)
-  wait(Generator.startRandomFire, 1000)
+  Building.manageAll()
+  wait(Generator.startFailures, 1000)
 }
 
 function TIC() {
@@ -86,9 +86,9 @@ function TIC() {
     player.use()
   }
 
-  player.update(t)
-
-
+  entities.forEach(entity => {
+    entity.update(t)
+  })
 
   t++;
 }

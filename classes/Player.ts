@@ -29,7 +29,7 @@ class Player extends Entity {
       hopVer = y % 6 > 3// && y % 6 < 5
 
     y += hopHor ? 1 : 0
-    //x += hopVer ? 0 : 1
+    x += hopVer ? 0 : 1
 
     spr(this.sprite, x + camera.x, y + camera.y, this.transparency, 1, this.flip)
   }

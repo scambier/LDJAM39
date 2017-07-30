@@ -22,29 +22,56 @@ class Building extends Tile {
   /**
    * Start the timer that will periodically shut down a building tile
    */
-  static startShutdown() {
+  static manageAll() {
     if (Math.random() > .5) {
       Building.randomShutdown()
     }
-    wait(Building.startShutdown, 1000)
+    wait(Building.manageAll, 1000)
   }
 
   static randomShutdown() {
     if (!Building.listOff) {
       Building.listOff = []
     }
-    // Take a building from our list
-    // and shut it down
-    const building: Building = randomItem(Building.list)
-    if (building) building.shutdown()
+
+    // Count incidents
+    let incidents = 0
+    Generator.list.forEach(gen => {
+      if (gen.failure) {
+        ++incidents
+      }
+    })
+
+    // Lights off
+    const perc = .5 + (1 / 18) * incidents
+    if (incidents > 0) {
+      if (Math.random() < perc) {
+        // Take a building from our list
+        // and shut it down
+        const building: Building = randomItem(Building.list)
+        if (building) building.turnOff()
+      }
+    }
+
+    // Lights on
+    if (Math.random() < (1 - perc)) {
+      const building: Building = randomItem(Building.listOff)
+      if (building) building.turnOn()
+    }
   }
 
   /**
    * Change the tile and switch the building's list
    */
-  shutdown() {
+  turnOff() {
     remove(Building.list, this)
     Building.listOff.push(this)
     mset(this.x, this.y, 10)
+  }
+
+  turnOn() {
+    remove(Building.listOff, this)
+    Building.list.push(this)
+    mset(this.x, this.y, randomItem([5, 6, 7]))
   }
 }

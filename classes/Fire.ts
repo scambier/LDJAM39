@@ -18,6 +18,11 @@ class Fire extends Entity {
     this.hp -= 1/30
     if (this.hp <= 0) {
       remove(entities, this)
+      Generator.list.forEach(gen => {
+        if (gen.failure == this) {
+          gen.failure = null
+        }
+      })
     }
   }
 }
