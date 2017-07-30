@@ -6,13 +6,16 @@ class Entity {
   moving: Vector2 = {x: 0, y: 0}
   speed = .5
   transparency = 0
+  takeable = false
 
-  constructor(x, y, tile) {
-
+  constructor(x, y, tile, options: any = {}) {
     this.sprite = tile
-
     this.x = x
     this.y = y
+
+    if (options) {
+      this.takeable = options.takeable ? options.takeable : false
+    }
 
     entities.push(this)
   }
@@ -25,21 +28,21 @@ class Entity {
     return Math.round((this.y) / 8)
   }
 
+  get pos(): Vector2 {
+    return {x: this.x, y: this.y}
+  }
+
+  set pos(pos:Vector2) {
+    this.x = pos.x
+    this.y = pos.y
+  }
+
   get isMoving(): boolean {
     return this.moving.x != 0 || this.moving.y != 0
   }
 
   draw(t: number) {
-    let
-      x = Math.round(this.x),
-      y = Math.round(this.y),
-      hopHor = x % 6 == 0 || x % 6 == 1,
-      hopVer = y % 10 >= 0 && y % 10 < 5
-
-    y += hopHor ? 1 : 0
-    x += hopVer ? 0 : 1
-
-    spr(this.sprite, x + camera.x, y + camera.y, this.transparency, 1, this.flip)
+    spr(this.sprite, this.x + camera.x, this.y + camera.y, this.transparency, 1, this.flip)
   }
 
   update(t) {

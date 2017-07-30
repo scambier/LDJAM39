@@ -2,12 +2,14 @@ const entities: Entity[] = []
 
 let
   t = 0,
-  player: Entity,
+  player : Player,
+  extinguisher: Entity,
   camera: Camera
 
 function init() {
   camera = new Camera()
-  player = new Entity(6*8, 6*8, 256)
+  player = new Player(6*8, 6*8)
+  extinguisher = new Entity(8, 8, EXTINGUISHER, {takeable:true})
   Building.findAll()
   Generator.findAll()
 
@@ -19,7 +21,7 @@ function init() {
     ["Or to be eaten by rats and stuff.", 7000],
 
     ["", 10000],
-    ["(Your cable management suck too)", 10200],
+    ["(Your cable management sucks too)", 10200],
     ["(I mean, look at that mess)", 12000],
     ["", 14000],
     ["By the way, shit's on fire, yo.", 14000],
@@ -51,7 +53,12 @@ function TIC() {
   }
 
   /*
-   * Input
+   * Drawing
+   */
+  draw(t)
+
+  /*
+   * Input Move
    */
   let vect: Vector2 = {x: 0, y: 0}
 
@@ -69,12 +76,19 @@ function TIC() {
   }
   player.moveTo(vect)
 
+  /*
+   * Input Actions
+   */
+  if (btnp(TAKE)) {
+    player.take()
+  }
+  if (btn(USE)) {
+    player.use()
+  }
+
   player.update(t)
 
-  /*
-   * Drawing
-   */
-  draw(t)
+
 
   t++;
 }

@@ -3,6 +3,12 @@ const
   DOWN = 1,
   LEFT = 2,
   RIGHT = 3,
+  TAKE = 4,
+  USE = 5,
+
+  EXTINGUISHER = 257,
+  FIRE = 273,
+  GAS = 275,
 
   COLLIDES = [
     3, 11, // walls
@@ -88,4 +94,11 @@ function remove(arr, item): void {
   if (index > -1) {
     arr.splice(index, 1)
   }
+}
+
+function distanceBetween(vec1: Vector2, vec2: Vector2) {
+  const
+    a = vec1.x - vec2.x,
+    b = vec1.y - vec2.y
+  return Math.sqrt(a * a + b * b)
 }

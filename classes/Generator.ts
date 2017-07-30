@@ -19,7 +19,6 @@ class Generator extends Tile {
   }
 
   static startRandomFire() {
-    trace(Generator.list.length)
     const generator: Generator = randomItem(Generator.list)
     generator.failing = new Fire(generator.x * 8, generator.y * 8)
   }
