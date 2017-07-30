@@ -6,7 +6,7 @@ class Player extends Entity {
     super(x, y, 256)
   }
 
-  findClosest(cb, maxDist=8) {
+  findClosest(cb, maxDist = 8) {
     let
       closest = null,
       distance = 1000
@@ -55,9 +55,10 @@ class Player extends Entity {
   use() {
     switch (this.holding.sprite) {
       case EXTINGUISHER:
-        let closest = this.findClosest(item => item.sprite == FIRE, 10)
-        if (closest) {
-          spr(GAS, closest.x, closest.y,0, 1, t % 20 > 10)
+        let fire: Fire = this.findClosest(item => item.sprite == FIRE, 10)
+        if (fire) {
+          spr(GAS, fire.x, fire.y, 0, 1, t % 20 > 10)
+          fire.putDown()
         }
         break;
     }
