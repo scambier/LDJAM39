@@ -50,22 +50,4 @@ class Entity {
     this.y += (this.moving.y * this.speed)
   }
 
-  moveTo(vect: Vector2): void {
-
-    let
-      nextX = this.x + vect.x + vect.x * 3,
-      nextY = this.y + vect.y + vect.y * 3,
-      gx = Math.round(nextX / 8),
-      gy = Math.round(nextY / 8)
-
-
-    if (COLLIDES.indexOf(mget(gx, gy)) > -1) {
-      this.moving = {x: 0, y: 0}
-      return
-    }
-
-    this.moving = {x: vect.x, y: vect.y}
-    if (vect.x == -1) this.flip = false
-    if (vect.x == 1) this.flip = true
-  }
 }

@@ -22,7 +22,7 @@ function init() {
   camera = new Camera()
   player = new Player(6 * 8, 6 * 8)
   extinguisher = new Entity(8, 8, EXTINGUISHER, {takeable: true})
-  wrench = new Entity(78, 8, WRENCH, {takeable: true})
+  wrench = new Entity(78, 12, WRENCH, {takeable: true})
 
   Log.reset()
   Generator.resetAll()
@@ -51,7 +51,7 @@ function init() {
   })
 
   Building.manageAll()
-  wait(Generator.startFailures, 1000)
+  wait(Generator.startFailures, 10000)
 }
 
 function TIC() {
@@ -100,6 +100,8 @@ function TIC() {
   }
   if (btn(USE)) {
     player.use()
+  } else {
+    sfx(-1)
   }
 
   entities.forEach(entity => {
@@ -118,6 +120,7 @@ function draw(t: number) {
 
   drawMoon()
 
+  print("(W) take/drop (X) use", 1, 1)
   Log.draw()
 }
 
@@ -126,6 +129,7 @@ function gameover(success: boolean) {
   GAMEOVER = true
 
   if (SUCCESS) {
+    sfx(4, 'F-3')
     Log.print("")
     Log.print("Congratulations! You held up for the night!")
     wait(() => Log.print("There's no sunrise, sorry, I was a bit"), 2000)
@@ -134,6 +138,7 @@ function gameover(success: boolean) {
     wait(() => Log.print("Press W to restart the game"), 6000)
   }
   else {
+    sfx(3, 'C-3')
     Log.print("")
     Log.print("Wow dude. The city's dark by your fault.")
     wait(() => Log.print("That's cool for the stargazers, but"), 1000)
@@ -145,11 +150,11 @@ function gameover(success: boolean) {
 function moveMoon() {
   ++moonPos
 
-  if (moonPos == 13 * 8) {
+  if (moonPos == 13 * 8 && !GAMEOVER) {
     gameover(true)
   }
 
-  wait(moveMoon, 1000)
+  wait(moveMoon, 1200)
 }
 
 function drawMoon() {
@@ -158,4 +163,8 @@ function drawMoon() {
 
 function reset() {
   init()
+}
+
+function playSound(id: number, note?: number | string, duration?: number, channel?: number, volume?: number, speed?: number) {
+  sfx(id, note, duration, channel, volume, speed)
 }
