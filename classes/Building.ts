@@ -3,16 +3,20 @@
 class Building extends Tile {
   static tiles = [5, 6, 7]
   static tileOff = 10
+  static allTiles = [5, 6, 7, 10]
   static list: Building[]
   static listOff: Building[]
 
-  static findAll() {
+  static resetAll() {
     Building.list = []
+    Building.listOff = []
     for (let x = 0; x < 30; x++) {
       for (let y = 0; y < 17; y++) {
-        const tile = Building.tiles.indexOf(mget(x, y))
+        const tile = Building.allTiles.indexOf(mget(x, y))
         if (tile > -1) {
-          Building.list.push(new Building(x, y))
+          const building = new Building(x, y)
+          Building.list.push(building)
+          mset(building.x, building.y, randomItem([5, 6, 7]))
         }
       }
     }
@@ -54,7 +58,7 @@ class Building extends Tile {
     }
 
     // Lights on
-    if (Math.random() < (1 - perc)) {
+    if (Math.random() < (1 - perc/2)) {
       Building.turnRandomBuildOn()
     }
   }
@@ -77,11 +81,8 @@ class Building extends Tile {
     mset(this.x, this.y, 10)
 
     if (Building.list.length == 0) {
-      gameover()
-      Log.print("")
-      Log.print("Wow dude. The city's dark by your fault.")
-      wait(() => Log.print("That's cool for the stargazers, but"), 1000)
-      wait(() => Log.print("  people are dying. You're an awful person."), 1200)
+      gameover(false)
+
     }
   }
 

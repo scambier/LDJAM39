@@ -7,12 +7,36 @@ class Generator extends Tile {
 
   failure: Entity
 
+  static countFailures() {
+    let i = 0
+    Generator.list.forEach(gen => {
+      if (gen.failure) {
+        ++i
+      }
+    })
+    return i
+  }
+
+  static resetAll() {
+    if (this.list) {
+      this.list.forEach(item => {
+        item.failure = null
+      })
+    }
+    this.findAll()
+  }
+
   static startFailures() {
     const rnd = Math.random()
-    if (rnd < .1) {
-      Generator.startRandomFailure(FIRE)
-    } else if (rnd < .2) {
-      Generator.startRandomFailure(SPARKS)
+
+    if (Generator.countFailures() == 0 && Math.random() < .25) {
+      Generator.startRandomFailure(randomItem([FIRE, SPARKS]))
+    } else {
+      if (rnd < .15) {
+        Generator.startRandomFailure(FIRE)
+      } else if (rnd < .25) {
+        Generator.startRandomFailure(SPARKS)
+      }
     }
 
     wait(Generator.startFailures, 1000)

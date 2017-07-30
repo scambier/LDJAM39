@@ -4,7 +4,11 @@ let random = [
 ]
 
 class Log {
-  static history = []
+  static history : string[]
+
+  static reset(){
+    this.history = []
+  }
 
   static print(text) {
     this.history.push(text)

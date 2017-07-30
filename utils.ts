@@ -71,7 +71,7 @@ function clearMap(): void {
   sync()
 }
 
-const waitingCallbacks = []
+let waitingCallbacks = []
 
 function wait(cb, t): void {
   waitingCallbacks.push({cb: cb, t: time() + t})
@@ -85,6 +85,10 @@ function checkWaitingCallbacks() {
       waitingCallbacks.splice(i, 1)
     }
   }
+}
+
+function clearWaitingCallbacks() {
+  waitingCallbacks = []
 }
 
 function randomItem(items): any {

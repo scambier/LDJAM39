@@ -1,21 +1,34 @@
-const entities: Entity[] = []
-
 let
   t = 0,
+  entities: Entity[],
   player: Player,
   extinguisher: Entity,
   wrench: Entity,
   camera: Camera,
 
-  GAMEOVER = false
+  GAMEOVER: boolean,
+  SUCCESS: boolean,
+
+  moonPos: number
 
 function init() {
+  clearWaitingCallbacks()
+
+  GAMEOVER = false
+  SUCCESS = null
+  moonPos = 0
+
+  entities = []
   camera = new Camera()
   player = new Player(6 * 8, 6 * 8)
   extinguisher = new Entity(8, 8, EXTINGUISHER, {takeable: true})
   wrench = new Entity(78, 8, WRENCH, {takeable: true})
-  Building.findAll()
-  Generator.findAll()
+
+  Log.reset()
+  Generator.resetAll()
+  Building.resetAll()
+
+  moveMoon()
 
   let arr = [
     "Look at that city.",
@@ -30,11 +43,6 @@ function init() {
     "You have a fire extinguisher and a wrench.",
     "Use them to fix those generators.",
     "Try to keep up until the morning!"
-
-    // ["Anyway, do your best to keep the", 14000],
-    // ["  city powered all night.", 14200],
-    // ["Because while you're reading this,", 16000],
-    // ["  your city is going dark...", 18000],
   ]
   arr.forEach((item, i) => {
     wait(() => {
@@ -85,6 +93,9 @@ function TIC() {
    * Input Actions
    */
   if (btnp(TAKE)) {
+    if (GAMEOVER) {
+      reset()
+    }
     player.take()
   }
   if (btn(USE)) {
@@ -105,9 +116,46 @@ function draw(t: number) {
     entity.draw(t)
   })
 
+  drawMoon()
+
   Log.draw()
 }
 
-function gameover() {
+function gameover(success: boolean) {
+  SUCCESS = success
   GAMEOVER = true
+
+  if (SUCCESS) {
+    Log.print("")
+    Log.print("Congratulations! You held up for the night!")
+    wait(() => Log.print("There's no sunrise, sorry, I was a bit"), 2000)
+    wait(() => Log.print("  short on time."), 2200)
+    wait(() => Log.print("Does it matter though? Nah, you're a winner."), 4000)
+    wait(() => Log.print("Press W to restart the game"), 6000)
+  }
+  else {
+    Log.print("")
+    Log.print("Wow dude. The city's dark by your fault.")
+    wait(() => Log.print("That's cool for the stargazers, but"), 1000)
+    wait(() => Log.print("  people are dying. You're an awful person."), 1200)
+    wait(() => Log.print("Press W to restart the game"), 4000)
+  }
+}
+
+function moveMoon() {
+  ++moonPos
+
+  if (moonPos == 13 * 8) {
+    gameover(true)
+  }
+
+  wait(moveMoon, 1000)
+}
+
+function drawMoon() {
+  spr(261, 15 * 8 + moonPos, 8, 0, 1, 0, 0, 2, 2)
+}
+
+function reset() {
+  init()
 }
