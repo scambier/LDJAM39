@@ -5,38 +5,41 @@ let
   player: Player,
   extinguisher: Entity,
   wrench: Entity,
-  camera: Camera
+  camera: Camera,
+
+  GAMEOVER = false
 
 function init() {
   camera = new Camera()
   player = new Player(6 * 8, 6 * 8)
   extinguisher = new Entity(8, 8, EXTINGUISHER, {takeable: true})
-  wrench = new Entity(8, 8, WRENCH, {takeable: true})
+  wrench = new Entity(78, 8, WRENCH, {takeable: true})
   Building.findAll()
   Generator.findAll()
 
   let arr = [
-    ["Look at that city.", 1000],
-    ["It will soon run out of power, because", 2000],
-    ["  your generators suck.", 2200],
-    ["They're old, prone to fail or catch fire.", 5000],
-    ["Or to be eaten by rats and stuff.", 7000],
-
-    ["", 10000],
-    ["(Your cable management sucks too)", 10200],
-    ["(I mean, look at that mess)", 12000],
-    ["", 14000],
-    ["By the way, shit's on fire, yo.", 14000],
+    "Look at that city.",
+    "It will soon run out of power, because",
+    "  your generators suck.",
+    "They're old, prone to fail or catch fire.",
+    "",
+    "Your cable management sucks too",
+    "(I mean, look at that mess)",
+    "",
+    "By the way, shit's on fire, yo.",
+    "You have a fire extinguisher and a wrench.",
+    "Use them to fix those generators.",
+    "Try to keep up until the morning!"
 
     // ["Anyway, do your best to keep the", 14000],
     // ["  city powered all night.", 14200],
     // ["Because while you're reading this,", 16000],
     // ["  your city is going dark...", 18000],
   ]
-  arr.forEach(item => {
+  arr.forEach((item, i) => {
     wait(() => {
-      Log.print(item[0])
-    }, item[1])
+      Log.print(item)
+    }, i * 2000)
   })
 
   Building.manageAll()
@@ -103,4 +106,8 @@ function draw(t: number) {
   })
 
   Log.draw()
+}
+
+function gameover() {
+  GAMEOVER = true
 }

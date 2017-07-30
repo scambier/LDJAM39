@@ -23,6 +23,7 @@ class Building extends Tile {
    * Start the timer that will periodically shut down a building tile
    */
   static manageAll() {
+
     if (Math.random() > .5) {
       Building.randomShutdown()
     }
@@ -48,28 +49,46 @@ class Building extends Tile {
       if (Math.random() < perc) {
         // Take a building from our list
         // and shut it down
-        const building: Building = randomItem(Building.list)
-        if (building) building.turnOff()
+        Building.turnRandomBuildOff()
       }
     }
 
     // Lights on
     if (Math.random() < (1 - perc)) {
-      const building: Building = randomItem(Building.listOff)
-      if (building) building.turnOn()
+      Building.turnRandomBuildOn()
     }
   }
 
-  /**
-   * Change the tile and switch the building's list
-   */
+  static turnRandomBuildOff() {
+    if (Building.list.length > 0) {
+      const building: Building = randomItem(Building.list)
+      if (building) building.turnOff()
+    }
+  }
+
+  static turnRandomBuildOn() {
+    const building: Building = randomItem(Building.listOff)
+    if (building) building.turnOn()
+  }
+
   turnOff() {
     remove(Building.list, this)
     Building.listOff.push(this)
     mset(this.x, this.y, 10)
+
+    if (Building.list.length == 0) {
+      gameover()
+      Log.print("")
+      Log.print("Wow dude. The city's dark by your fault.")
+      wait(() => Log.print("That's cool for the stargazers, but"), 1000)
+      wait(() => Log.print("  people are dying. You're an awful person."), 1200)
+    }
   }
 
   turnOn() {
+    if (GAMEOVER) {
+      return
+    }
     remove(Building.listOff, this)
     Building.list.push(this)
     mset(this.x, this.y, randomItem([5, 6, 7]))

@@ -15,6 +15,14 @@ class Camera {
     return -this.offsetY
   }
 
+  set x(x) {
+    this.offsetX = x
+  }
+
+  set y(y) {
+    this.offsetY = y
+  }
+
   center(x: number, y: number) {
     this.offsetX = x - 30 * 4
     this.offsetY = y - 17 * 4

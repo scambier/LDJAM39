@@ -14,6 +14,7 @@ class Generator extends Tile {
     } else if (rnd < .2) {
       Generator.startRandomFailure(SPARKS)
     }
+
     wait(Generator.startFailures, 1000)
   }
 
@@ -26,6 +27,7 @@ class Generator extends Tile {
     const generator: Generator = randomItem(Generator.list)
     if (!generator.failure) {
       generator.failure = new GeneratorFailure(generator.x * 8, generator.y * 8, sprite)
+      Building.turnRandomBuildOff()
     }
   }
 
