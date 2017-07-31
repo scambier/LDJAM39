@@ -120,7 +120,7 @@ function draw(t: number) {
 
   drawMoon()
 
-  print("(W) take/drop (X) use", 1, 1)
+  print("(Z) take/drop (X) use", 1, 1)
   Log.draw()
 }
 
